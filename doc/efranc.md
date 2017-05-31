@@ -37,20 +37,11 @@ Detect the language of text. Return the IANA code.
 
 Options:
 
-* ```
-min_length: integer()
-```
- : minimum length to accept (default: 10)
+* `min_length: integer()` : minimum length to accept (default: 10)
 
-* ```
-withlist: [string()]
-```
- : allow languages (default: all)
+* `withlist: [string()]` : allow languages (default: all)
 
-* ```
-blacklist: [string()]
-```
- : disallow languages (default: none)
+* `blacklist: [string()]` : disallow languages (default: none)
 
 
 <a name="detect_all-1"></a>
@@ -72,19 +63,10 @@ Detect the language of text. Return a list of IANA codes with weight.
 
 Options:
 
-* ```
-min_length: integer()
-```
- : minimum length to accept (default: 10)
+* `min_length: integer()` : minimum length to accept (default: 10)
 
-* ```
-withlist: [string()]
-```
- : allow languages (default: all)
+* `withlist: [string()]` : allow languages (default: all)
 
-* ```
-blacklist: [string()]
-```
- : disallow languages (default: none)
+* `blacklist: [string()]` : disallow languages (default: none)
 
 

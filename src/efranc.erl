@@ -17,9 +17,9 @@ detect(Value) ->
 %
 % Options:
 % <ul>
-% <li><pre>min_length: integer()</pre> : minimum length to accept (default: 10)</li>
-% <li><pre>withlist: [string()]</pre> : allow languages (default: all)</li>
-% <li><pre>blacklist: [string()]</pre> : disallow languages (default: none)</li>
+% <li><tt>min_length: integer()</tt> : minimum length to accept (default: 10)</li>
+% <li><tt>withlist: [string()]</tt> : allow languages (default: all)</li>
+% <li><tt>blacklist: [string()]</tt> : disallow languages (default: none)</li>
 % </ul>
 % @end
 detect(Value, Options) ->
@@ -39,9 +39,9 @@ detect_all(Value) ->
 %
 % Options:
 % <ul>
-% <li><pre>min_length: integer()</pre> : minimum length to accept (default: 10)</li>
-% <li><pre>withlist: [string()]</pre> : allow languages (default: all)</li>
-% <li><pre>blacklist: [string()]</pre> : disallow languages (default: none)</li>
+% <li><tt>min_length: integer()</tt> : minimum length to accept (default: 10)</li>
+% <li><tt>withlist: [string()]</tt> : allow languages (default: all)</li>
+% <li><tt>blacklist: [string()]</tt> : disallow languages (default: none)</li>
 % </ul>
 % @end
 detect_all(Value, Options) when is_list(Value) ->
