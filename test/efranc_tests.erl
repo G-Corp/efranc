@@ -1,5 +1,6 @@
 -module(efranc_tests).
 -include_lib("eunit/include/eunit.hrl").
+-include("fixtures.hrl").
 
 efranc_tests_test_() ->
   {setup,
@@ -10,6 +11,27 @@ efranc_tests_test_() ->
        ok
    end,
    [
+    {timeout, 120, fun() ->
+        maps:map(fun(Lang, Text) ->
+                     ?assertEqual(Lang, efranc:detect(Text))
+                 end, ?FIXTURES)
+    end},
+    {timeout, 120, fun() ->
+        maps:map(fun(Lang, Text) ->
+                     ?assertNotEqual(
+                        efranc:detect(Text),
+                        efranc:detect(Text, #{blacklist => [Lang]})
+                       )
+                 end, ?FIXTURES)
+    end},
+    {timeout, 120, fun() ->
+        maps:map(fun(Lang, Text) ->
+                     ?assertEqual(
+                        efranc:detect(Text),
+                        efranc:detect(Text, #{whitelist => [Lang]})
+                       )
+                 end, ?FIXTURES)
+    end},
     fun() ->
         ?assertEqual(
            "fra",
@@ -36,6 +58,10 @@ efranc_tests_test_() ->
         ?assertEqual(undefined, efranc:detect("한국어")),
         ?assertEqual(undefined, efranc:detect("英語文法では")),
         ?assertEqual(undefined, efranc:detect("short")),
-        ?assertEqual(undefined, efranc:detect("1234567890"))
+        ?assertEqual(undefined, efranc:detect("1234567890")),
+        ?assertEqual(undefined, efranc:detect("XYZ")),
+        ?assertEqual("sco", efranc:detect("the the the the the ")),
+        ?assertEqual("sco", efranc:detect("the", #{min_length => 3})),
+        ?assertEqual(undefined, efranc:detect("the", #{min_length => 4}))
     end
    ]}.

@@ -45,41 +45,75 @@ detect_all(Value) ->
 % </ul>
 % @end
 detect_all(Value, Options) when is_list(Value) ->
-  case string:len(Value) < ?MIN_LENGTH of
-    true ->
-      undefined;
-    false ->
-      Value0 = string:sub_string(Value, 1, ?MAX_LENGTH),
-      {Script, Weight} = get_top_script(Value0),
-      case maps:get(Script, ?DATA, undefined) of
-        undefined ->
-          if
-            Weight == 0 -> undefined;
-            true -> [{Script, Weight}]
-          end;
-        Script3Grams ->
-          normalize(
-            Value0,
-            get_distances(ngrams_to_map(trigrams(Value0)),
-                          Script3Grams,
-                          Options))
-      end
-  end.
+  Options0 = #{min_length := MinLength} = maps:merge(#{min_length => ?MIN_LENGTH,
+                                                       whitelist => [all],
+                                                       blacklist => []},
+                                                     Options),
+  filter_languages(
+    case string:len(Value) < MinLength of
+      true ->
+        undefined;
+      false ->
+        Value0 = string:sub_string(Value, 1, ?MAX_LENGTH),
+        {Script, Weight} = get_top_script(Value0),
+        case maps:get(Script, ?DATA, undefined) of
+          undefined ->
+            if
+              Weight == 0 -> undefined;
+              true -> [{Script, Weight}]
+            end;
+          Script3Grams ->
+            normalize(
+              Value0,
+              get_distances(ngrams_to_map(trigrams(Value0)),
+                            Script3Grams))
+        end
+    end,
+    Options0).
 
+normalize(_, []) ->
+  undefined;
 normalize(Value, [{_, Min}|_] = Distances) ->
   Max = (string:len(Value) * ?MAX_DIFFERENCE) - Min,
-  normalize(Distances, Min, Max).
+  case Max =< 0 of
+    true ->
+      undefined;
+    _ ->
+      normalize(Distances, Min, Max)
+  end.
 
 normalize([], _, _) ->
   [];
 normalize([{IANA, Distance}|Rest], Min, Max) ->
   [{IANA, 1 - ((Distance - Min) / Max)}|normalize(Rest, Min, Max)].
 
-get_distances(TriGrams, Languages, _Options) ->
+get_distances(TriGrams, Languages) ->
   lists:sort(fun({_, A}, {_, B}) -> A < B end,
              maps:fold(fun(Lang, Grams, Acc) ->
                            [{Lang, get_distance(maps:to_list(TriGrams), Grams)}|Acc]
-                       end, [], Languages)).
+                       end,
+                       [],
+                       Languages)).
+
+filter_languages(undefined, _) ->
+  undefined;
+filter_languages(Languages, #{whitelist := [all], blacklist := []}) ->
+  Languages;
+filter_languages(Languages, #{whitelist := WhiteList, blacklist := BlackList}) ->
+  case lists:foldr(fun({K, _} = Lng, Acc) ->
+                case (lists:member(all, WhiteList) orelse
+                      lists:member(K, WhiteList)) andalso
+                     not lists:member(K, BlackList) of
+                  true ->
+                    [Lng|Acc];
+                  false ->
+                    Acc
+                end
+            end, [], Languages) of
+    [] -> undefined;
+    Else -> Else
+  end.
+
 
 get_distance(TriGrams, Grams) ->
   X = string:tokens(Grams, "|"),

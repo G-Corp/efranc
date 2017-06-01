@@ -9,6 +9,79 @@ __Version:__ 0.0.1
 __Authors:__ Gregoire Lejeune ([`gregoire.lejeune@gmail.com`](mailto:gregoire.lejeune@gmail.com)).
 
 
+### Api ###
+
+
+#### DATA TYPES ####
+
+`options() = #{whitelist => whitelist(), blacklist => blacklist(), min_length => integer()}`
+
+`whitelist() = [lang()]`
+
+`blacklist() = [lang()]`
+
+
+#### EXPORTS ####
+
+<h5>`efranc:detect(Text, Options) -> Lang`</h5>
+
+Types:
+
+__`Text = string()`<br />`Options = options()`<br />`Lang = lang()`__
+
+`detect/2` return the detected language for the `Text` or `undefined`.
+
+<h5>`efranc:detect(Text) -> Lang`</h5>
+
+Equivalent to `efranc:detect(Text, #{})`
+
+<h5>`efranc:detect_all(Text, Options) -> [{Lang, Weight}]`</h5>
+
+Types:
+
+__`Text = string()`<br />`Options = options()`<br />`Lang = lang()`<br />`Weight = float()`__
+
+`detect_all/2` return the list of possible detected language for the `Text` or `undefined`.
+
+<h5>`efranc:detect_all(Text) -> [{Lang, Weight}]`</h5>
+
+Equivalent to `efranc:detect_all(Text, #{})`
+
+
+### Command line tool ###
+
+Build:
+
+```
+
+make script
+
+```
+
+Use :
+
+```
+
+./_build/escriptize/bin/efranc -h
+Usage: efranc [-w <whitelist>] [-b <blacklist>] [-m <min_size>] [-h]
+
+  -w, --whitelist  Whitelist
+  -b, --blacklist  Blacklist
+  -m, --min_size   Minimum size
+  -h, --help       Display this help
+
+```
+
+Example :
+
+```
+
+./_build/escriptize/bin/efranc "Bonjour tout le monde, ceci est un example d'utilisation d'efranc en ligne de commande ! Enjoy ;)"
+fra | Bonjour tout le monde, ceci est un example d'utilisation d'efranc en ligne de...
+
+```
+
+
 ### Derivation ###
 
 eFranc is a port to Elang of [franc](https://github.com/wooorm/franc).

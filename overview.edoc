@@ -4,6 +4,78 @@
 @title efranc : Detect the language of text.
 @doc
 
+<h3>Api</h3>
+
+<h4>DATA TYPES</h4>
+
+<tt>options() = #{whitelist => whitelist(), blacklist => blacklist(), min_length => integer()}</tt>
+
+<tt>whitelist() = [lang()]</tt>
+
+<tt>blacklist() = [lang()]</tt>
+
+<h4>EXPORTS</h4>
+
+<h5><tt>efranc:detect(Text, Options) -> Lang</tt></h5>
+
+Types:
+
+<b>
+<tt>Text = string()</tt><br />
+<tt>Options = options()</tt><br />
+<tt>Lang = lang()</tt>
+</b>
+
+<tt>detect/2</tt> return the detected language for the <tt>Text</tt> or <tt>undefined</tt>.
+
+<h5><tt>efranc:detect(Text) -> Lang</tt></h5>
+
+Equivalent to <tt>efranc:detect(Text, #{})</tt>
+
+<h5><tt>efranc:detect_all(Text, Options) -> [{Lang, Weight}]</tt></h5>
+
+Types:
+
+<b>
+<tt>Text = string()</tt><br />
+<tt>Options = options()</tt><br />
+<tt>Lang = lang()</tt><br />
+<tt>Weight = float()</tt>
+</b>
+
+<tt>detect_all/2</tt> return the list of possible detected language for the <tt>Text</tt> or <tt>undefined</tt>.
+
+<h5><tt>efranc:detect_all(Text) -> [{Lang, Weight}]</tt></h5>
+
+Equivalent to <tt>efranc:detect_all(Text, #{})</tt>
+
+<h3>Command line tool</h3>
+
+Build:
+
+<pre>
+make script
+</pre>
+
+Use :
+
+<pre>
+./_build/escriptize/bin/efranc -h
+Usage: efranc [-w &lt;whitelist&gt;] [-b &lt;blacklist&gt;] [-m &lt;min_size&gt;] [-h]
+
+  -w, --whitelist  Whitelist
+  -b, --blacklist  Blacklist
+  -m, --min_size   Minimum size
+  -h, --help       Display this help
+</pre>
+
+Example :
+
+<pre>
+./_build/escriptize/bin/efranc "Bonjour tout le monde, ceci est un example d'utilisation d'efranc en ligne de commande ! Enjoy ;)"
+fra | Bonjour tout le monde, ceci est un example d'utilisation d'efranc en ligne de...
+</pre>
+
 <h3>Derivation</h3>
 
 eFranc is a port to Elang of <a href="https://github.com/wooorm/franc">franc</a>.
