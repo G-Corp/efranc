@@ -33,7 +33,7 @@ Equivalent to [`detect(Value, #{})`](#detect-2).
 `detect(Value, Options) -> any()`
 
 
-Detect the language of text. Return the IANA code.
+Detect the language of text. Return the ISO-639-3 code.
 
 Options:
 
@@ -59,7 +59,7 @@ Equivalent to [`detect_all(Value, #{})`](#detect_all-2).
 `detect_all(Value, Options) -> any()`
 
 
-Detect the language of text. Return a list of IANA codes with weight.
+Detect the language of text. Return a list of ISO-639-3 codes with weight.
 
 Options:
 

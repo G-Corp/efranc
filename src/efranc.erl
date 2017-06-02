@@ -13,7 +13,7 @@ detect(Value) ->
   detect(Value, #{}).
 
 % @doc
-% Detect the language of text. Return the IANA code.
+% Detect the language of text. Return the ISO-639-3 code.
 %
 % Options:
 % <ul>
@@ -24,8 +24,8 @@ detect(Value) ->
 % @end
 detect(Value, Options) ->
   case detect_all(Value, Options) of
-    [{IANA, _}|_] ->
-      IANA;
+    [{ISO, _}|_] ->
+      ISO;
     Other ->
       Other
   end.
@@ -35,7 +35,7 @@ detect_all(Value) ->
   detect_all(Value, #{}).
 
 % @doc
-% Detect the language of text. Return a list of IANA codes with weight.
+% Detect the language of text. Return a list of ISO-639-3 codes with weight.
 %
 % Options:
 % <ul>
@@ -84,8 +84,8 @@ normalize(Value, [{_, Min}|_] = Distances) ->
 
 normalize([], _, _) ->
   [];
-normalize([{IANA, Distance}|Rest], Min, Max) ->
-  [{IANA, 1 - ((Distance - Min) / Max)}|normalize(Rest, Min, Max)].
+normalize([{ISO, Distance}|Rest], Min, Max) ->
+  [{ISO, 1 - ((Distance - Min) / Max)}|normalize(Rest, Min, Max)].
 
 get_distances(TriGrams, Languages) ->
   lists:sort(fun({_, A}, {_, B}) -> A < B end,
