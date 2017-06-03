@@ -4,48 +4,52 @@
 @title efranc : Detect the language of text.
 @doc
 
-<h3>Api</h3>
+<h3>API</h3>
 
 <h4>DATA TYPES</h4>
 
 <tt>options() = #{whitelist => whitelist(), blacklist => blacklist(), min_length => integer()}</tt>
 
-<tt>whitelist() = [lang()]</tt>
+<tt>whitelist() = [code()]</tt>
 
-<tt>blacklist() = [lang()]</tt>
+<tt>blacklist() = [code()]</tt>
+
+<tt>code() = string()</tt>
+
+<tt>iso6393() = #{code => string(), part_2b => string(), part_2t => string(), part_1 => string(), scope => individual | macrolanguage | special, type => ancient | constructed | extinct | historical | living | special, ref => string(), comment => string()}</tt>
 
 <h4>EXPORTS</h4>
 
-<h5><tt>efranc:detect(Text, Options) -> Lang</tt></h5>
+<b><tt>efranc:detect(Text, Options) -> Lang</tt></b>
 
 Types:
 
 <b>
 <tt>Text = string()</tt><br />
 <tt>Options = options()</tt><br />
-<tt>Lang = lang()</tt>
+<tt>Lang = code() | iso6393()</tt>
 </b>
 
 <tt>detect/2</tt> return the detected language for the <tt>Text</tt> or <tt>undefined</tt>.
 
-<h5><tt>efranc:detect(Text) -> Lang</tt></h5>
+<b><tt>efranc:detect(Text) -> Lang</tt></b>
 
 Equivalent to <tt>efranc:detect(Text, #{})</tt>
 
-<h5><tt>efranc:detect_all(Text, Options) -> [{Lang, Weight}]</tt></h5>
+<b><tt>efranc:detect_all(Text, Options) -> [{Lang, Weight}]</tt></b>
 
 Types:
 
 <b>
 <tt>Text = string()</tt><br />
 <tt>Options = options()</tt><br />
-<tt>Lang = lang()</tt><br />
+<tt>Lang = code() | iso6393()</tt><br />
 <tt>Weight = float()</tt>
 </b>
 
 <tt>detect_all/2</tt> return the list of possible detected language for the <tt>Text</tt> or <tt>undefined</tt>.
 
-<h5><tt>efranc:detect_all(Text) -> [{Lang, Weight}]</tt></h5>
+<b><tt>efranc:detect_all(Text) -> [{Lang, Weight}]</tt></b>
 
 Equivalent to <tt>efranc:detect_all(Text, #{})</tt>
 

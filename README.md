@@ -9,41 +9,45 @@ __Version:__ 0.0.1
 __Authors:__ Gregoire Lejeune ([`gregoire.lejeune@gmail.com`](mailto:gregoire.lejeune@gmail.com)).
 
 
-### Api ###
+### API ###
 
 
 #### DATA TYPES ####
 
 `options() = #{whitelist => whitelist(), blacklist => blacklist(), min_length => integer()}`
 
-`whitelist() = [lang()]`
+`whitelist() = [code()]`
 
-`blacklist() = [lang()]`
+`blacklist() = [code()]`
+
+`code() = string()`
+
+`iso6393() = #{code => string(), part_2b => string(), part_2t => string(), part_1 => string(), scope => individual | macrolanguage | special, type => ancient | constructed | extinct | historical | living | special, ref => string(), comment => string()}`
 
 
 #### EXPORTS ####
 
-<h5>`efranc:detect(Text, Options) -> Lang`</h5>
+__`efranc:detect(Text, Options) -> Lang`__
 
 Types:
 
-__`Text = string()`<br />`Options = options()`<br />`Lang = lang()`__
+__`Text = string()`<br />`Options = options()`<br />`Lang = code() | iso6393()`__
 
 `detect/2` return the detected language for the `Text` or `undefined`.
 
-<h5>`efranc:detect(Text) -> Lang`</h5>
+__`efranc:detect(Text) -> Lang`__
 
 Equivalent to `efranc:detect(Text, #{})`
 
-<h5>`efranc:detect_all(Text, Options) -> [{Lang, Weight}]`</h5>
+__`efranc:detect_all(Text, Options) -> [{Lang, Weight}]`__
 
 Types:
 
-__`Text = string()`<br />`Options = options()`<br />`Lang = lang()`<br />`Weight = float()`__
+__`Text = string()`<br />`Options = options()`<br />`Lang = code() | iso6393()`<br />`Weight = float()`__
 
 `detect_all/2` return the list of possible detected language for the `Text` or `undefined`.
 
-<h5>`efranc:detect_all(Text) -> [{Lang, Weight}]`</h5>
+__`efranc:detect_all(Text) -> [{Lang, Weight}]`__
 
 Equivalent to `efranc:detect_all(Text, #{})`
 
