@@ -53,7 +53,7 @@ detect_all(Value) ->
 % <li><tt>blacklist: [string()]</tt> : disallow languages (default: none)</li>
 % </ul>
 % @end
--spec detect_all(string(), options()) -> [{efranc_lang:code() | efranc_lang:iso6393(), float}].
+-spec detect_all(string(), options()) -> [{efranc_lang:code() | efranc_lang:iso6393(), float()}].
 detect_all(Value, Options) when is_list(Value) ->
   Options0 = #{min_length := MinLength} = maps:merge(#{min_length => ?MIN_LENGTH,
                                                        whitelist => [all],

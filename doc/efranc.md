@@ -83,7 +83,7 @@ Equivalent to [`detect_all(Value, #{})`](#detect_all-2).
 ### detect_all/2 ###
 
 <pre><code>
-detect_all(Value::string(), Options::<a href="#type-options">options()</a>) -&gt; [{<a href="efranc_lang.md#type-code">efranc_lang:code()</a> | <a href="efranc_lang.md#type-iso6393">efranc_lang:iso6393()</a>, float}]
+detect_all(Value::string(), Options::<a href="#type-options">options()</a>) -&gt; [{<a href="efranc_lang.md#type-code">efranc_lang:code()</a> | <a href="efranc_lang.md#type-iso6393">efranc_lang:iso6393()</a>, float()}]
 </code></pre>
 <br />
 
