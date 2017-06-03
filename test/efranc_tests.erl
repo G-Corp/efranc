@@ -11,12 +11,12 @@ efranc_tests_test_() ->
        ok
    end,
    [
-    {timeout, 120, fun() ->
+    {timeout, 360, fun() ->
         maps:map(fun(Lang, Text) ->
                      ?assertEqual(Lang, efranc:detect(Text))
                  end, ?FIXTURES)
     end},
-    {timeout, 120, fun() ->
+    {timeout, 360, fun() ->
         maps:map(fun(Lang, Text) ->
                      ?assertNotEqual(
                         efranc:detect(Text),
@@ -24,7 +24,7 @@ efranc_tests_test_() ->
                        )
                  end, ?FIXTURES)
     end},
-    {timeout, 120, fun() ->
+    {timeout, 360, fun() ->
         maps:map(fun(Lang, Text) ->
                      ?assertEqual(
                         efranc:detect(Text),
