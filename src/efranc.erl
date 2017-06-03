@@ -4,11 +4,17 @@
 
 -export([detect/1, detect/2, detect_all/1, detect_all/2]).
 
+-type options() :: #{min_length => integer(),
+                     whitelist => [efranc_lang:code()],
+                     blacklist => [efranc_lang:code()],
+                     details => true | false}.
+
 -define(MAX_DIFFERENCE, 300).
 -define(MIN_LENGTH, 10).
 -define(MAX_LENGTH, 2048).
 
 % @equiv detect(Value, #{})
+-spec detect(string()) -> efranc_lang:code().
 detect(Value) ->
   detect(Value, #{}).
 
@@ -20,8 +26,10 @@ detect(Value) ->
 % <li><tt>min_length: integer()</tt> : minimum length to accept (default: 10)</li>
 % <li><tt>withlist: [string()]</tt> : allow languages (default: all)</li>
 % <li><tt>blacklist: [string()]</tt> : disallow languages (default: none)</li>
+% <li><tt>details: true | false</tt> : return ISO-639-3 details (default: false)</li>
 % </ul>
 % @end
+-spec detect(string(), options()) -> efranc_lang:code() | efranc_lang:iso6393().
 detect(Value, Options) ->
   case detect_all(Value, Options) of
     [{ISO, _}|_] ->
@@ -31,6 +39,7 @@ detect(Value, Options) ->
   end.
 
 % @equiv detect_all(Value, #{})
+-spec detect_all(string()) -> [{efranc_lang:code(), float()}].
 detect_all(Value) ->
   detect_all(Value, #{}).
 
@@ -44,32 +53,40 @@ detect_all(Value) ->
 % <li><tt>blacklist: [string()]</tt> : disallow languages (default: none)</li>
 % </ul>
 % @end
+-spec detect_all(string(), options()) -> [{efranc_lang:code() | efranc_lang:iso6393(), float}].
 detect_all(Value, Options) when is_list(Value) ->
   Options0 = #{min_length := MinLength} = maps:merge(#{min_length => ?MIN_LENGTH,
                                                        whitelist => [all],
-                                                       blacklist => []},
+                                                       blacklist => [],
+                                                       details => false},
                                                      Options),
-  filter_languages(
-    case string:len(Value) < MinLength of
-      true ->
-        undefined;
-      false ->
-        Value0 = string:sub_string(Value, 1, ?MAX_LENGTH),
-        {Script, Weight} = get_top_script(Value0),
-        case maps:get(Script, ?DATA, undefined) of
-          undefined ->
-            if
-              Weight == 0 -> undefined;
-              true -> [{Script, Weight}]
-            end;
-          Script3Grams ->
-            normalize(
-              Value0,
-              get_distances(ngrams_to_map(trigrams(Value0)),
-                            Script3Grams))
-        end
-    end,
-    Options0).
+  All = filter_languages(
+          case string:len(Value) < MinLength of
+            true ->
+              undefined;
+            false ->
+              Value0 = string:sub_string(Value, 1, ?MAX_LENGTH),
+              {Script, Weight} = get_top_script(Value0),
+              case maps:get(Script, ?DATA, undefined) of
+                undefined ->
+                  if
+                    Weight == 0 -> undefined;
+                    true -> [{Script, Weight}]
+                  end;
+                Script3Grams ->
+                  normalize(
+                    Value0,
+                    get_distances(ngrams_to_map(trigrams(Value0)),
+                                  Script3Grams))
+              end
+          end,
+          Options0),
+  case maps:get(details, Options0, false) of
+    true ->
+      [{efranc_lang:info(ISO), Weight} || {ISO, Weight} <- All];
+    false ->
+      All
+  end.
 
 normalize(_, []) ->
   undefined;

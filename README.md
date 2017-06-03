@@ -108,5 +108,6 @@ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WAR
 
 
 <table width="100%" border="0" summary="list of modules">
-<tr><td><a href="https://github.com/G-Corp/efranc/blob/master/doc/efranc.md" class="module">efranc</a></td></tr></table>
+<tr><td><a href="https://github.com/G-Corp/efranc/blob/master/doc/efranc.md" class="module">efranc</a></td></tr>
+<tr><td><a href="https://github.com/G-Corp/efranc/blob/master/doc/efranc_lang.md" class="module">efranc_lang</a></td></tr></table>
 
