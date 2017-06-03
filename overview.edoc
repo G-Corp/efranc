@@ -4,6 +4,8 @@
 @title efranc : Detect the language of text.
 @doc
 
+[![Build Status](https://travis-ci.org/G-Corp/efranc.svg?branch=master)](https://travis-ci.org/G-Corp/efranc)
+
 <h3>API</h3>
 
 <h4>DATA TYPES</h4>
