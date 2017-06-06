@@ -1,15 +1,27 @@
 {application, efranc,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
+ [{description, "Detect the language of text"}
+  , {vsn, "0.0.1"}
+  , {registered, []}
+  , {applications, [
+                    kernel
+                    , stdlib
+                   ]}
+  , {env,[]}
+  , {modules, []}
 
-  {maintainers, []},
-  {licenses, ["Apache 2.0"]},
-  {links, []}
+  , {maintainers, []}
+  , {licenses, ["BSD-3"]}
+  , {links, [{"Github", "https://github.com/G-Corp/efranc"}]}
+  , {files, ["src/*"
+             , "bin/*"
+             , "include/*"
+             , "lib/*"
+             , "Makefile"
+             , "bu.mk"
+             , "README.md"
+             , "CHANGELOG.md"
+             , "rebar.config"
+             , "rebar.lock"
+             , "mix.exs"]}
+  , {build_tools, ["rebar3", "mix", "make"]}
  ]}.

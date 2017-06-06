@@ -8,3 +8,5 @@ script:
 distclean::
 	$(verbose) $(RM_RF) doc
 
+changelog:
+	$(verbose) github_changelog_generator
