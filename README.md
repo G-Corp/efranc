@@ -98,6 +98,10 @@ eFranc is a port to Elang of [franc](https://github.com/wooorm/franc).
 efranc is available for use under the following license, commonly known as the 3-clause (or "modified") BSD license:
 
 Copyright (c) 2017 G-Corp<br />
+Copyright (c) 2014 Titus Wormer &lt;tituswormer@gmail.com&gt;<br />
+Copyright (c) 2008 Kent S Johnson<br />
+Copyright (c) 2006 Jacob R Rideout &lt;kde@jacobrideout.net&gt;<br />
+Copyright (c) 2004 Maciej Ceglowski<br />
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
